@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lucy Spells">
+<title>Lucy's Volleyball Spelling</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body { font-family: "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", system-ui, sans-serif; color: #1d3557;
+    background: linear-gradient(#7fd3ff 0%, #bdeaff 55%, #ffe29a 55%, #f7c873 100%); min-height: 100%; overflow-x: hidden; }
+  .sun { position: fixed; top: 18px; right: 26px; width: 90px; height: 90px; border-radius: 50%; background: #ffd93b; box-shadow: 0 0 40px #ffe066; z-index: 0; }
+  .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 16px 14px 30px; text-align: center; }
+  .screen { display: none; } .screen.on { display: block; }
+  h1 { font-size: clamp(38px, 7vw, 64px); margin: 10px 0 4px; color: #e63946; text-shadow: 3px 3px 0 #fff; }
+  .sub { font-size: 26px; margin: 0 0 18px; }
+  .card { background: rgba(255,255,255,.92); border-radius: 28px; padding: 22px; box-shadow: 0 8px 0 rgba(0,0,0,.12); margin: 14px auto; }
+  button { font-family: inherit; cursor: pointer; border: none; border-radius: 22px; }
+  .big { font-size: 40px; padding: 20px 46px; background: #ff7b00; color: #fff; box-shadow: 0 8px 0 #c25e00; margin: 10px; }
+  .big:active { transform: translateY(5px); box-shadow: 0 3px 0 #c25e00; }
+  .mid { font-size: 28px; padding: 14px 28px; background: #2a9d8f; color: #fff; box-shadow: 0 6px 0 #1d6f65; margin: 8px; }
+  .ball { font-size: 90px; display: inline-block; animation: bounce 1.2s infinite ease-in-out; }
+  @keyframes bounce { 50% { transform: translateY(-26px) rotate(180deg); } }
+  .sheets { display: inline-block; font-size: 24px; margin-top: 10px; color: #1d3557; background: #fff3c4; padding: 12px 22px; border-radius: 18px; text-decoration: none; border: 3px dashed #f4a261; }
+  label.toggle { font-size: 22px; display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; }
+  label.toggle input { width: 30px; height: 30px; }
+  .progress { font-size: 40px; letter-spacing: 4px; min-height: 52px; }
+  .ptext { font-size: 22px; }
+  #answer { font-family: inherit; font-size: clamp(64px, 12vw, 96px); width: 100%; max-width: 620px; text-align: center; padding: 6px 10px; border: 6px solid #48cae4; border-radius: 26px; letter-spacing: 8px; color: #1d3557; outline: none; background: #fff; }
+  #answer:focus { border-color: #ff7b00; }
+  .fb { font-size: 34px; min-height: 48px; margin: 10px 0; font-weight: bold; }
+  .fb.good { color: #2b9348; } .fb.try { color: #e76f51; }
+  .tiles { min-height: 0; margin: 6px 0; }
+  .tile { display: inline-block; font-size: 72px; width: 96px; height: 110px; line-height: 110px; margin: 4px; background: #fff3c4; border: 5px solid #f4a261; border-radius: 18px; }
+  .kb { display: none; max-width: 860px; margin: 12px auto 0; }
+  .kb.on { display: block; }
+  .kb button { font-size: 40px; width: calc(100% / 7 - 10px); max-width: 110px; height: 82px; margin: 5px; background: #fff; color: #1d3557; box-shadow: 0 6px 0 #8ecae6; }
+  .kb button:active { transform: translateY(4px); box-shadow: 0 2px 0 #8ecae6; }
+  .kb .del { background: #ffd6d6; box-shadow: 0 6px 0 #e5989b; width: calc(200% / 7 - 10px); max-width: 230px; }
+  .kb .go { background: #b7efc5; box-shadow: 0 6px 0 #4ad66d; width: calc(200% / 7 - 10px); max-width: 230px; }
+  .hear { font-size: 34px; padding: 14px 30px; background: #4361ee; color: #fff; box-shadow: 0 6px 0 #2d3fb0; margin: 6px; }
+  .stars { font-size: 80px; }
+  .warn { display: none; background: #ffe5e5; border-radius: 16px; padding: 10px; font-size: 20px; margin: 10px auto; max-width: 640px; }
+  .warn.show { display: block; }
+  #gear { position: fixed; bottom: 10px; right: 12px; font-size: 26px; background: transparent; opacity: .5; z-index: 5; }
+  #parent textarea { width: 100%; height: 110px; font-size: 20px; }
+  #parent select { font-size: 18px; max-width: 100%; }
+  .confetti { position: fixed; top: -20px; font-size: 32px; z-index: 9; animation: fall linear forwards; pointer-events: none; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+  .spike { animation: spike .7s ease-out; } @keyframes spike { 40% { transform: scale(1.3) rotate(-15deg); } }
+  .small { font-size: 18px; }
+</style>
+</head>
+<body>
+<div class="sun"></div>
+<div class="wrap">
+
+<section id="screen-start" class="screen on">
+  <h1>🏐 Lucy's Volleyball Spelling</h1>
+  <p class="sub" id="weekLine"></p>
+  <div class="ball">🏐</div>
+  <div class="warn" id="voiceWarn"></div>
+  <div><button class="big" id="startBtn">▶ Let's Play!</button></div>
+  <div id="trickyWrap" style="display:none"><button class="mid" id="trickyBtn">⭐ Tricky words</button></div>
+  <label class="toggle"><input type="checkbox" id="kbToggle"> Big letter buttons</label><br>
+  <a class="sheets" id="sheetsLink" href="lucy-practice-sheets.pdf" target="_blank" rel="noopener">🖨️ Practice sheets to print</a>
+</section>
+
+<section id="screen-practice" class="screen">
+  <div class="progress" id="progress"></div>
+  <div class="ptext" id="progressText"></div>
+  <div class="card">
+    <button class="hear" id="hearBtn">🔊 Hear it</button>
+    <div class="tiles" id="tiles"></div>
+    <input id="answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Type the word">
+    <div class="fb" id="feedback"></div>
+    <div class="kb" id="kb"></div>
+  </div>
+  <button class="mid small" id="homeBtn" style="background:#adb5bd;box-shadow:0 4px 0 #6c757d">🏠 Home</button>
+</section>
+
+<section id="screen-end" class="screen">
+  <h1>🎉 You did it, Lucy!</h1>
+  <div class="stars" id="stars"></div>
+  <p class="sub" id="endText"></p>
+  <button class="big" id="againBtn">🔁 Play again</button>
+  <div id="endTrickyWrap"><button class="mid" id="endTrickyBtn">⭐ Practice tricky words</button></div>
+  <button class="mid" id="endHome" style="background:#adb5bd;box-shadow:0 4px 0 #6c757d">🏠 Home</button>
+</section>
+
+<section id="parent" class="screen">
+  <div class="card" style="text-align:left">
+    <h2>Grown-ups</h2>
+    <p class="small" id="pWeek"></p>
+    <p class="small">Words (one per line or comma-separated). Saved on this device only.</p>
+    <textarea id="pWords"></textarea>
+    <p><button class="mid small" id="pSave">Save words</button> <button class="mid small" id="pReset" style="background:#e76f51">Reset to this week's list</button></p>
+    <p class="small">Voice: <select id="pVoice"></select> <button class="mid small" id="pTest">Test</button></p>
+    <p class="small">Speed: <input type="range" id="pRate" min="0.5" max="1.1" step="0.05"></p>
+    <button class="mid" id="pClose">Done</button>
+  </div>
+</section>
+</div>
+<button id="gear" title="Grown-ups: press and hold">⚙️</button>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = {"week": "Week 11", "dates": "October 19 - October 23, 2026", "test_date": "Friday, October 23, 2026", "words": ["at", "mat", "sat", "we", "can", "ship", "shop", "shed", "shin", "shot"], "bonus": [], "source": "Week 11 class spelling list", "sentences": {"at": "We play at the beach.", "mat": "The cat sat on the mat.", "sat": "I sat in the sand.", "we": "We like to play ball.", "can": "I can hit the ball.", "ship": "The big ship is on the sea.", "shop": "We shop for a new ball.", "shed": "The ball is in the shed.", "shin": "I bumped my shin.", "shot": "That was a great shot!"}, "sounds": {"at": ["aah", "tuh"], "mat": ["mmm", "aah", "tuh"], "sat": ["sss", "aah", "tuh"], "we": ["wuh", "eee"], "can": ["kuh", "aah", "nnn"], "ship": ["shh", "ih", "puh"], "shop": ["shh", "aw", "puh"], "shed": ["shh", "eh", "duh"], "shin": ["shh", "ih", "nnn"], "shot": ["shh", "aw", "tuh"]}};
+  var NAME = "Lucy";
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = "lucyVolley." + DATA.week + "|" + DATA.dates + ".";
+  function lsGet(k, d) { try { var v = localStorage.getItem(KEY + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function lsSet(k, v) { try { localStorage.setItem(KEY + k, JSON.stringify(v)); } catch (e) {} }
+  function lsGlob(k, d) { try { var v = localStorage.getItem("lucyVolley." + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function lsGlobSet(k, v) { try { localStorage.setItem("lucyVolley." + k, JSON.stringify(v)); } catch (e) {} }
+
+  function wordList() { return lsGet("custom", null) || DATA.words.concat(DATA.bonus || []); }
+
+  // ---------- speech ----------
+  var Speech = {
+    ok: "speechSynthesis" in window && "SpeechSynthesisUtterance" in window, voices: [], voice: null, ready: false,
+    rate: lsGlob("rate", 0.8),
+    score: function (v) {
+      var n = (v.name || "").toLowerCase(), s = 0;
+      if (/en[-_]us/i.test(v.lang)) s += 20; else if (/^en/i.test(v.lang)) s += 10;
+      ["samantha", "aria", "jenny", "ava", "allison", "google us english", "zira", "alex", "susan"].forEach(function (k, i) { if (n.indexOf(k) >= 0) s += 30 - i; });
+      if (/natural|enhanced|premium/.test(n)) s += 12;
+      if (v.localService) s += 5;
+      if (/novelty|whisper|bad news|bells|boing|bubbles|cellos|zarvox|trinoids|organ|albert|jester|superstar|wobble|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley/.test(n)) s -= 80;
+      return s;
+    },
+    load: function () {
+      if (!this.ok) return;
+      var vs = []; try { vs = window.speechSynthesis.getVoices() || []; } catch (e) {}
+      this.voices = vs.filter(function (v) { return /^en/i.test(v.lang || ""); });
+      var saved = lsGlob("voice", null), self = this, best = null, bs = -1;
+      this.voices.forEach(function (v) { if (saved && v.name === saved) { best = v; bs = 9999; } var sc = self.score(v); if (sc > bs) { bs = sc; best = v; } });
+      this.voice = best; this.ready = this.voices.length > 0;
+    },
+    speak: function (parts, rate, sync) {
+      if (!this.ok) return;
+      var self = this;
+      function go() {
+        parts.forEach(function (t) {
+          if (!t) return;
+          try {
+            var u = new SpeechSynthesisUtterance(t); u.lang = "en-US"; if (self.voice) u.voice = self.voice;
+            u.rate = rate || self.rate; u.pitch = 1.1; u.volume = 1; u.onerror = function () {};
+            window.speechSynthesis.speak(u);
+          } catch (e) {}
+        });
+      }
+      try {
+        var ss = window.speechSynthesis;
+        // sync=true: speak inside the tap itself (iOS Safari only unlocks speech from a user gesture)
+        if (ss.speaking || ss.pending) { ss.cancel(); if (sync) go(); else setTimeout(go, 80); } else { go(); }
+      } catch (e) {}
+    }
+  };
+  function sentenceFor(w) { return (DATA.sentences || {})[w] || ""; }
+  function sayWord(w, sync) { Speech.speak([w + ".", sentenceFor(w), w + "."], Speech.rate, sync); }
+  function saySlow(w) {
+    var parts = ["Listen slowly.", w + "."];
+    var snd = (DATA.sounds || {})[w];
+    if (snd && snd.length) parts.push(snd.join("... ") + "...");
+    else parts.push(w.split("").join("... ") + "...");
+    parts.push(w + ".");
+    Speech.speak(parts, Math.max(0.45, Speech.rate - 0.3));
+  }
+  function sayLetters(w) {
+    Speech.speak(["Copy the letters.", w.toUpperCase().split("").join(", ") + ".", w + "."], Math.max(0.5, Speech.rate - 0.2));
+  }
+  function voiceCheck() {
+    var el = $("voiceWarn");
+    if (!Speech.ok || !Speech.ready) { el.textContent = "🙊 This device has no talking voice, so a grown-up may need to read the words (hold the ⚙️ to see them)."; el.classList.add("show"); }
+    else el.classList.remove("show");
+  }
+  if (Speech.ok) { Speech.load(); try { window.speechSynthesis.addEventListener("voiceschanged", function () { Speech.load(); voiceCheck(); fillVoices(); }); } catch (e) {} }
+
+  // ---------- game ----------
+  var queue = [], idx = 0, misses = 0, missedSet = {}, busy = false, total = 0;
+  var cheers = ["Great spike! 🏐", "Super serve! ⭐", "Nice dig! 💪", "Ace! 🎉", "You got it! 🌟", "Awesome, Lucy! 🏖️"];
+  var tries = ["Almost! Let's listen slowly. 👂", "Good try! Listen again. 🐚"];
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function show(id) { ["screen-start", "screen-practice", "screen-end", "parent"].forEach(function (s) { $(s).classList.toggle("on", s === id); }); }
+  function norm(s) { return (s || "").trim().toLowerCase().replace(/\s+/g, " "); }
+  var useKb = lsGlob("kb", ("ontouchstart" in window) || navigator.maxTouchPoints > 0);
+
+  function applyKb() {
+    $("kb").classList.toggle("on", useKb);
+    $("kbToggle").checked = useKb;
+    // with the on-screen keys, keep the iPad's own keyboard from popping up
+    $("answer").setAttribute("inputmode", useKb ? "none" : "text");
+    if (useKb) $("answer").setAttribute("readonly", "readonly"); else $("answer").removeAttribute("readonly");
+  }
+  function buildKb() {
+    var kb = $("kb"), letters = "abcdefghijklmnopqrstuvwxyz".split("");
+    letters.forEach(function (l) { var b = document.createElement("button"); b.textContent = l; b.setAttribute("data-k", l); kb.appendChild(b); });
+    var d = document.createElement("button"); d.className = "del"; d.textContent = "⌫"; d.setAttribute("data-k", "DEL"); d.setAttribute("aria-label", "erase"); kb.appendChild(d);
+    var g = document.createElement("button"); g.className = "go"; g.textContent = "✓"; g.id = "kbGo"; g.setAttribute("data-k", "GO"); g.setAttribute("aria-label", "check"); kb.appendChild(g);
+    kb.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b || busy) return;
+      var k = b.getAttribute("data-k"), a = $("answer");
+      if (k === "DEL") a.value = a.value.slice(0, -1); else if (k === "GO") check(); else if (a.value.length < 14) a.value += k;
+    });
+  }
+
+  function renderProgress() {
+    var s = ""; for (var i = 0; i < total; i++) s += i < idx ? "🏐" : "⚪";
+    $("progress").textContent = s;
+    $("progressText").textContent = "Word " + (idx + 1) + " of " + total;
+  }
+  function start(list) {
+    queue = shuffle(list); idx = 0; total = queue.length; missedSet = {};
+    show("screen-practice"); nextWord(true);
+  }
+  function nextWord(sync) {
+    misses = 0; busy = false;
+    $("answer").value = ""; $("feedback").textContent = ""; $("feedback").className = "fb"; $("tiles").innerHTML = "";
+    renderProgress();
+    sayWord(queue[idx], sync);
+    if (!useKb) setTimeout(function () { $("answer").focus(); }, 50);
+  }
+  function revealTiles(w) {
+    $("tiles").innerHTML = w.split("").map(function (c) { return '<span class="tile">' + c + "</span>"; }).join("");
+  }
+  function check() {
+    if (busy) return;
+    var w = queue[idx], a = norm($("answer").value);
+    if (!a) { $("feedback").textContent = "Type the letters you hear! 🔤"; $("feedback").className = "fb try"; return; }
+    if (a === norm(w)) {
+      busy = true;
+      $("feedback").textContent = cheers[Math.floor(Math.random() * cheers.length)]; $("feedback").className = "fb good spike";
+      Speech.speak([["Yes!", "Great job!", "You got it!"][Math.floor(Math.random() * 3)]], 0.95);
+      idx++; renderProgress();
+      setTimeout(function () { if (idx >= total) finish(); else nextWord(false); }, 1500);
+      return;
+    }
+    misses++; missedSet[w] = true;
+    $("feedback").className = "fb try";
+    if (misses === 1) {
+      $("feedback").textContent = tries[0];
+      saySlow(w);
+    } else {
+      $("feedback").textContent = "Copy the letters! You can do it! 🏖️";
+      revealTiles(w); sayLetters(w);
+    }
+    $("answer").value = "";
+    if (!useKb) $("answer").focus();
+  }
+  function finish() {
+    var missed = Object.keys(missedSet);
+    lsSet("tricky", missed);
+    var stars = missed.length === 0 ? 3 : missed.length <= Math.ceil(total / 4) ? 2 : 1;
+    $("stars").textContent = "⭐".repeat(stars);
+    $("endText").textContent = missed.length ? "Tricky words: " + missed.join(", ") : "Every word right! Amazing!";
+    $("endTrickyWrap").style.display = missed.length ? "block" : "none";
+    show("screen-end"); confetti();
+    Speech.speak([stars === 3 ? "Wow! Amazing job, Lucy!" : "Great job, Lucy! You finished!"], 0.9);
+    refreshTricky();
+  }
+  function confetti() {
+    var em = ["🏐", "⭐", "🎉", "🌴", "🐚", "💖"];
+    for (var i = 0; i < 40; i++) { var s = document.createElement("span"); s.className = "confetti"; s.textContent = em[i % em.length];
+      s.style.left = Math.random() * 100 + "vw"; s.style.animationDuration = (2 + Math.random() * 2.5) + "s"; s.style.animationDelay = Math.random() + "s";
+      document.body.appendChild(s); setTimeout(function (n) { return function () { n.remove(); }; }(s), 5500); }
+  }
+  function refreshTricky() {
+    var t = lsGet("tricky", []).filter(function (w) { return wordList().indexOf(w) >= 0; });
+    $("trickyWrap").style.display = t.length ? "block" : "none";
+    return t;
+  }
+
+  // ---------- parent ----------
+  function fillVoices() {
+    var sel = $("pVoice"); sel.innerHTML = "";
+    Speech.voices.forEach(function (v) { var o = document.createElement("option"); o.value = v.name; o.textContent = v.name + " (" + v.lang + ")"; if (Speech.voice && v.name === Speech.voice.name) o.selected = true; sel.appendChild(o); });
+  }
+  function openParent() {
+    $("pWeek").textContent = DATA.week + " · " + DATA.dates + (DATA.test_date ? " · Test: " + DATA.test_date : "");
+    $("pWords").value = wordList().join("\n"); $("pRate").value = Speech.rate; fillVoices(); show("parent");
+  }
+  var holdT = null;
+  function holdStart(e) { e.preventDefault(); holdT = setTimeout(openParent, 900); }
+  function holdEnd() { clearTimeout(holdT); }
+  $("gear").addEventListener("mousedown", holdStart); $("gear").addEventListener("touchstart", holdStart, { passive: false });
+  ["mouseup", "mouseleave", "touchend", "touchcancel"].forEach(function (ev) { $("gear").addEventListener(ev, holdEnd); });
+  $("gear").addEventListener("keydown", function (e) { if (e.key === "Enter" && e.shiftKey) openParent(); });
+  $("pSave").addEventListener("click", function () {
+    var ws = $("pWords").value.split(/[\n,]+/).map(function (s) { return s.trim(); }).filter(Boolean);
+    if (ws.length) lsSet("custom", ws); show("screen-start"); refreshTricky();
+  });
+  $("pReset").addEventListener("click", function () { try { localStorage.removeItem(KEY + "custom"); } catch (e) {} $("pWords").value = wordList().join("\n"); });
+  $("pVoice").addEventListener("change", function () { lsGlobSet("voice", this.value); Speech.load(); });
+  $("pRate").addEventListener("input", function () { Speech.rate = parseFloat(this.value); lsGlobSet("rate", Speech.rate); });
+  $("pTest").addEventListener("click", function () { sayWord("ship", true); });
+  $("pClose").addEventListener("click", function () { show("screen-start"); });
+
+  // ---------- wiring ----------
+  $("weekLine").textContent = DATA.week + " words · " + DATA.dates;
+  buildKb(); applyKb(); voiceCheck(); refreshTricky();
+  $("kbToggle").addEventListener("change", function () { useKb = this.checked; lsGlobSet("kb", useKb); applyKb(); });
+  $("startBtn").addEventListener("click", function () { start(wordList()); });
+  $("trickyBtn").addEventListener("click", function () { start(refreshTricky()); });
+  $("againBtn").addEventListener("click", function () { start(wordList()); });
+  $("endTrickyBtn").addEventListener("click", function () { start(lsGet("tricky", [])); });
+  $("endHome").addEventListener("click", function () { show("screen-start"); });
+  $("homeBtn").addEventListener("click", function () { show("screen-start"); });
+  $("hearBtn").addEventListener("click", function () { sayWord(queue[idx], true); if (!useKb) $("answer").focus(); });
+  $("answer").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); check(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); sayWord(queue[idx]); }
+  });
+  // physical keyboard still works when on-screen keys are on (input is readonly then)
+  document.addEventListener("keydown", function (e) {
+    if (!useKb || !$("screen-practice").classList.contains("on") || busy) return;
+    var a = $("answer");
+    if (/^[a-zA-Z]$/.test(e.key) && !e.ctrlKey && !e.metaKey) { if (a.value.length < 14) a.value += e.key.toLowerCase(); e.preventDefault(); }
+    else if (e.key === "Backspace") { a.value = a.value.slice(0, -1); e.preventDefault(); }
+    else if (e.key === "Enter") { check(); e.preventDefault(); }
+  });
+})();
+</script>
+</body>
+</html>
